@@ -1,35 +1,46 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.StudentDto;
-import com.example.demo.repository.StudentRepository;
-import com.example.demo.entity.Student;
+import com.example.demo.service.StudentService;
+
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
+@RequiredArgsConstructor
 public class StudentController {
 
-    private final StudentRepository studentRepository;
+    private final StudentService studentService;
 
-    public StudentController(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
 
     @GetMapping("/student")
-    public List<Student> getStudent() {
-        return studentRepository.findAll();
+    public ResponseEntity<List<StudentDto>> getStudent() {
+        // return ResponseEntity.status(HttpStatus.OK).body(studentService.getAllStudents());
+        return ResponseEntity.ok(studentService.getAllStudents());
+    }
+
+    @GetMapping("/student/{id}")
+    public ResponseEntity<StudentDto> getStudentById(@PathVariable Long id) {
+        return ResponseEntity.ok(studentService.getStudentById(id));
 
     }
 
-    // @GetMapping("/student/{id}")
-    // public StudentDto getStudentById() {
-    //     return new StudentDto(1234L, "Yash", "deoreyash@gmail.com");
-
-    // }
+    @PostMapping
+    public ResponseEntity<StudentDto>
+    }
+    
     
 
 }
