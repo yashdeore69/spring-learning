@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AddStudentRequestDto;
 import com.example.demo.dto.StudentDto;
 import com.example.demo.service.StudentService;
 
@@ -38,8 +39,10 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<StudentDto>
+    public ResponseEntity<StudentDto> createNewStudent(@RequestBody AddStudentRequestDto addStudentRequestDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createNewStudent(addStudentRequestDto);
     }
+    
     
     
 

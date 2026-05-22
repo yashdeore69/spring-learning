@@ -5,6 +5,7 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.AddStudentRequestDto;
 import com.example.demo.dto.StudentDto;
 import com.example.demo.entity.Student;
 import com.example.demo.repository.StudentRepository;
@@ -33,4 +34,10 @@ public class StudentServiceImpl implements StudentService {
         return modelMapper.map(student, StudentDto.class);
     }
 
+    @Override
+    public StudentDto createNewStudent(AddStudentRequestDto addStudentRequestDto) {
+        Student newStudent = modelMapper.map(addStudentRequestDto, Student.class);
+        Student student = studentRepository.save(newStudent);
+        return modelMapper.map(student, StudentDto.class);
+    }
 }
