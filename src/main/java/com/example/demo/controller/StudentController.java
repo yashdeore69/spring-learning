@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,22 +18,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/students")
 public class StudentController {
 
     private final StudentService studentService;
 
 
-    @GetMapping("/student")
+    @GetMapping
     public ResponseEntity<List<StudentDto>> getStudent() {
         // return ResponseEntity.status(HttpStatus.OK).body(studentService.getAllStudents());
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    @GetMapping("/student/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<StudentDto> getStudentById(@PathVariable Long id) {
         return ResponseEntity.ok(studentService.getStudentById(id));
 
@@ -40,9 +43,15 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<StudentDto> createNewStudent(@RequestBody AddStudentRequestDto addStudentRequestDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createNewStudent(addStudentRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createNewStudent(addStudentRequestDto));
     }
     
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAStudent(@PathVariable Long id) {
+        studentService.deleteStudentById(id);
+        return ResponseEntity.noContent().build();
+    }
+
     
     
 
