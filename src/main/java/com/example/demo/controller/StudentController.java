@@ -19,6 +19,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -50,6 +52,11 @@ public class StudentController {
     public ResponseEntity<Void> deleteAStudent(@PathVariable Long id) {
         studentService.deleteStudentById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<StudentDto> updateStudent(@PathVariable Long id, @RequestBody AddStudentRequestDto addStudentRequestDto) {
+        return ResponseEntity.ok(studentService.updateStudent(id, addStudentRequestDto));
     }
 
     
